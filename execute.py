@@ -4,7 +4,6 @@ from futurism import Futurism_Scraper
 from mckinseyinsights import MckinseyInsights_Scraper
 from venturebeat import VentureBeat_Scraper
 from wiredcom import WiredCom_Scraper
-from techradar import TechRadar_Scraper
 from springwise import Springwise_Scraper
 from theverge import TheVerge_Scraper
 from engadget import Engadget_Scraper
@@ -58,15 +57,6 @@ def run():
                 'scraper': Engadget_Scraper,
                 'url': "https://www.engadget.com/rss.xml"
             },
-
-
-
-############################################################
-#            {
-#                'sito': 'Techradar',
-#                'scraper': TechRadar_Scraper,
-#                'url': "https://www.techradar.com/rss"
-#            },
     ]
 
     errorlog = open("download.log", "a")
