@@ -1,0 +1,9 @@
+TODO Scraper: IPI Singapore: ok, https://www.ipi-singapore.org/
+TODO Scraper: Water Online ( https://www.wateronline.com/ )
+DONE Scraper: https://www.water-technology.net/technology/
+TODO Scraper: https://www.aquatechtrade.com/news/
+TODO Scraper: https://smartwatermagazine.com/news/research-and-development
+TODO Scraper: https://smartwatermagazine.com/news/circular-economy
+TODO Scraper: https://www.herox.com/blog/rss
+TODO move all helper functions in utils
+TODO manage  dates
