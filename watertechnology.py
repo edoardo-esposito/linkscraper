@@ -7,7 +7,6 @@ from datetime import date
 from abstractscraper import AbstractScraper
 from datetime import date
 
-
 def get_today_date():
     today = date.today()
     today.strftime("%Y-%m-%d")
