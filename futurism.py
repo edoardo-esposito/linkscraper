@@ -1,9 +1,6 @@
-from urllib.request import urlopen
-import requests
-from requests import get
 import hashlib
+import requests
 from bs4 import BeautifulSoup
-import re
 from abstractscraper import AbstractScraper
 
 
@@ -40,13 +37,18 @@ class Futurism_Scraper(AbstractScraper):
     def get_item_text(self, url):
         super().get_item_text(url)
 
-        headers = super().set_headers()
-        results = requests.get(url.strip(), headers=headers)
+        try:
+            headers = super().set_headers()
+            results = requests.get(url.strip(), headers=headers)
 
-        soup = BeautifulSoup(results.text, "html.parser")
-        content_div = soup.find(attrs={"itemprop": "articleBody"})
+            soup = BeautifulSoup(results.text, "html.parser")
+            content_div = soup.find(attrs={"itemprop": "articleBody"})
 
-        text = super().clean_text(content_div)
+            text = super().clean_text(content_div)
+        except Exception as e:
+            # TODO write exception to log for analysis
+            print(e)
+            text = ''
 
         return text
 
@@ -54,7 +56,8 @@ class Futurism_Scraper(AbstractScraper):
 def run():
     #TODO move url to generic config file (same for execute.py)
     URL = "https://feeder.co/discover/085f3bc023/futurism-com"
-    s = Futurism_Scraper(URL)
+    sito = "Futurism"
+    s = Futurism_Scraper(URL, sito)
     s.get_items()
     items = s.cycle_items()
 

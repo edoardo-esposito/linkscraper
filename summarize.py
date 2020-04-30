@@ -1,43 +1,75 @@
 from csv import reader, writer
 import os
+from pathlib import Path
 from summarizer import Summarizer
 
 
-def summarize(body):
-    model = Summarizer()
+def summarize(id, body):
+    print("SUMMARIZE ID: %s" % id)
+    filename = "temp/%s.csv" % id
 
     result = model(body, ratio=0.15, min_length=30)
     summary = ''.join(result)
+    # summary = body[:10]
 
-    return summary
+    with open(filename, "w") as output:
+        wtr = writer(output, delimiter=";")
+        rowcontents = [summary]
+        wtr.writerow(rowcontents)
 
-
-with open("articoli.csv", "r") as source, open("buffer.csv", "w", newline='') as output:
-    rdr = reader(source, delimiter=";")
-    wtr = writer(output, delimiter=";")
-
-    line = 0
-    for row in rdr:
-        body = row[4]
-        # summary = body[:10]
-        summary = summarize(body)
-
-        row.append(summary)
-        wtr.writerow(row)
-
-        line+=1
+    return body
 
 
-with open("buffer.csv", "r") as source:
-    rdr = reader(source, delimiter=";")
+def summarizefile(filename):
+    with open(filename, "r") as source, open("buffer.csv", "w", newline='') as output:
+        rdr = reader(source, delimiter=";")
+        wtr = writer(output, delimiter=";")
 
-    with open("output.csv", "w", newline='') as result:
-        wtr = writer(result, delimiter=";")
-        for r in rdr:
-            wtr.writerow((r[0], r[1], r[2], r[3], r[5]))
+        for row in rdr:
+            if len(row[4]):
+                id = row[0]
+                body = row[4]
+                summary = summarize(id, body)
 
-os.remove("buffer.csv")
+                row.append(summary)
+                wtr.writerow(row)
+
+        directory = "temp"
+        pathlist = Path(directory).glob('**/*.csv')
+
+        summaries = {}
+        for path in pathlist:
+            path_in_str = str(path)
+            base = os.path.basename(path_in_str)
+            ID = os.path.splitext(base)[0]
+
+            with open(path_in_str, "r") as source:
+                fr = reader(source, delimiter=";")
+                for r in fr:
+                    summaries[ID] = r[0]
+                    break
+
+        return summaries
 
 
+#TODO remove all files in temp directory
+def writesummariestofile(summaries):
+    with open("buffer.csv", "r") as source:
+        rdr = reader(source, delimiter=";")
+
+        with open("articles_summarized.csv", "a", newline='') as result:
+            wtr = writer(result, delimiter=";")
+            for r in rdr:
+                wtr.writerow((r[0], r[1], r[2], r[3], r[5], summaries[r[0]]))
+
+    os.remove("buffer.csv")
 
 
+model = Summarizer()
+directory = "output"
+pathlist = Path(directory).glob('**/*.csv')
+for path in pathlist:
+    path_in_str = str(path)
+    filename = path_in_str
+    summaries = summarizefile(filename)
+    writesummariestofile(summaries)

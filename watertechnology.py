@@ -25,15 +25,15 @@ class WaterTechnology_Scraper(AbstractScraper):
         results = requests.get(self.url.strip(), headers=headers)
 
         soup = BeautifulSoup(results.text, "html.parser")
-        # container = soup.find('article', class_='main-feature')
-        # title = container.find('h2')
-        #
-        # links = [{
-        #     'id': self.generate_link_id(title.text),
-        #     'titolo': title.text,
-        #     'url': title.find('a').get('href'),
-        #     'data': today
-        # }]
+        container = soup.find('article', class_='main-feature')
+        title = container.find('h2')
+
+        links = [{
+            'id': self.generate_link_id(title.text),
+            'titolo': title.text,
+            'url': title.find('a').get('href'),
+            'data': today
+        }]
 
         def get_links_from_structure(articles):
             links = []
@@ -56,12 +56,8 @@ class WaterTechnology_Scraper(AbstractScraper):
 
             return links
 
-        container = soup.find('div', class_='cards')
-        links = get_links_from_structure(container)
-
-        # html = container.prettify("utf-8")
-        # with open("output1.html", "wb") as file:
-        #     file.write(html)
+        # container = soup.find('div', class_='cards')
+        # links = get_links_from_structure(container)
 
         self.links = links
 
@@ -73,30 +69,40 @@ class WaterTechnology_Scraper(AbstractScraper):
     def get_item_text(self, url):
         super().get_item_text(url)
 
-        headers = super().set_headers()
-        results = requests.get(url.strip(), headers=headers)
+        try:
+            headers = super().set_headers()
+            results = requests.get(url.strip(), headers=headers)
 
-        soup = BeautifulSoup(results.text, "html.parser")
-        container = soup.find('div', class_='post-content-container')
+            soup = BeautifulSoup(results.text, "html.parser")
+            container = soup.find('div', class_='post-content-container')
 
-        text = ''
-        if container:
-            pars = container.find_all('p')
+            text = ''
+            if container:
+                pars = container.find_all('p')
 
-            for p in pars:
-                text += p.text
+                for p in pars:
+                    t = super().clean_paragraph(p)
+                    text += t
 
+        except:
+            # TODO write exception to log for analysis
+            text = ''
+
+        # print (text)
+
+        # self.var_to_file(text)
         return (text)
 
 
 def run():
     # TODO move url to generic config file (same for execute.py)
     URL = "https://www.water-technology.net/technology/"
-    s = WaterTechnology_Scraper(URL)
+    sito = 'Water-Technology'
+    s = WaterTechnology_Scraper(URL, sito)
     s.get_items()
     items = s.cycle_items()
 
-    print(items)
+    # print(items)
 
 
 if __name__ == '__main__':

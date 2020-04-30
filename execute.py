@@ -26,11 +26,11 @@ def run():
         #     'scraper': TechnologyReview_Computing_Scraper,
         #     'url': "https://www.technologyreview.com/c/computing/rss/"
         # },
-        {
-            'sito': 'Water-Technology',
-            'scraper': WaterTechnology_Scraper,
-            'url': "https://www.water-technology.net/technology/"
-        },
+        # {
+        #     'sito': 'Water-Technology',
+        #     'scraper': WaterTechnology_Scraper,
+        #     'url': "https://www.water-technology.net/technology/"
+        # },
         # {
         #     'sito': 'SingularityHub',
         #     'scraper': SingularityHub_Scraper,
@@ -56,11 +56,11 @@ def run():
         #     'scraper': Futurism_Scraper,
         #     'url': "https://feeder.co/discover/085f3bc023/futurism-com"
         # },
-        # {
-        #     'sito': 'Springwise',
-        #     'scraper': Springwise_Scraper,
-        #     'url': "https://www.springwise.com/feed/"
-        # },
+        {
+            'sito': 'Springwise',
+            'scraper': Springwise_Scraper,
+            'url': "https://www.springwise.com/feed/"
+        },
         # {
         #     'sito': 'The Verge',
         #     'scraper': TheVerge_Scraper,
@@ -78,7 +78,7 @@ def run():
         print("Get articles from [%s]" % s['sito'])
 
         try:
-            s = s['scraper'](s['url'])
+            s = s['scraper'](s['url'], s['sito'])
             s.get_items()
             items = s.cycle_items()
 

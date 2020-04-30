@@ -22,20 +22,26 @@ class SingularityHub_Scraper(AbstractScraper):
     def get_item_text(self,url):
         super().get_item_text(url)
 
-        headers = super().set_headers()
-        results = requests.get(url.strip(), headers=headers)
-        
-        soup = BeautifulSoup(results.text, "html.parser")
-        outer = soup.find('div', id = 'td-outer-wrap')
-        content_div = soup.find('div', class_='td-post-content')
+        try:
+            headers = super().set_headers()
+            results = requests.get(url.strip(), headers=headers)
 
-        text = super().clean_text(content_div)
+            soup = BeautifulSoup(results.text, "html.parser")
+            outer = soup.find('div', id = 'td-outer-wrap')
+            content_div = soup.find('div', class_='td-post-content')
+
+            text = super().clean_text(content_div)
+        except:
+            # TODO write exception to log for analysis
+            text = ''
 
         return (text)
 
+
 def run(): 
     URL = "https://singularityhub.com/feed/"
-    s = SingularityHub_Scraper(URL)
+    sito = 'SingularityHub'
+    s = SingularityHub_Scraper(URL, sito)
     s.get_items()
     items = s.cycle_items()
     
