@@ -140,3 +140,5 @@ cython_debug/
 # MIEI
 .idea
 *.csv
+bak/
+inutili/
