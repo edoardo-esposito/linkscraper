@@ -38,8 +38,9 @@ class AbstractScraper(object):
         print("%d links found" % len(self.links))
 
         for l in self.links:
-            text = self.get_item_text(l['url'])
-            l['text'] = text.encode().decode('utf-8')
+            if self.get_item_text(l['url']):
+                text = self.get_item_text(l['url'])
+                l['text'] = text.encode().decode('utf-8')
 
         return self.links
 
@@ -82,11 +83,17 @@ class AbstractScraper(object):
         links = []
         for getfeed in news_list:
             titolo = getfeed.title.text
+
+            description = ""
+            if getfeed.description.text:
+                description = getfeed.description.text
+
             link_id = self.generate_link_id(titolo)
 
             links.append({
                 'id': link_id,
                 'titolo': titolo,
+                'text': description,
                 'url': getfeed.link.nextSibling.rstrip(),
                 'data': self.parse_date(getfeed.pubdate.text)
             })
@@ -138,7 +145,16 @@ class AbstractScraper(object):
         return soup
 
     def clean_text(self, taggedtext):
+        print ("CLEAN")
+        print (len(taggedtext.text))
         btext = taggedtext.text
+
+        btext = btext.replace(r'\n', '')
+        btext = btext.replace(r'\r', '')
+        btext = re.sub(r'[^A-Za-z0-9\s]+', '', str(btext))
+        btext = btext.strip()
+
+        print (len(btext))
 
         return btext
 
