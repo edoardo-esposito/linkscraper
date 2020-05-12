@@ -81,8 +81,7 @@ def run():
     s.get_items_from_file()
     # s.get_items()
     items = s.cycle_items()
-    s.items_to_csv()
-
+    #s.items_to_csv()
     # print(items)
 
 
