@@ -7,5 +7,7 @@ TODO Scraper: https://smartwatermagazine.com/news/research-and-development
 TODO Scraper: https://smartwatermagazine.com/news/circular-economy
 TODO Scraper: https://www.herox.com/blog/rss
 TODO Scraper: https://shape.att.com/blog
+TODO Scraper: https://www.newsweek.com/tech-science
 TODO move all helper functions in utils
 TODO manage  dates
+TODO clean text functions from here: https://medium.com/coinmonks/multi-label-classification-blog-tags-prediction-using-nlp-b0b5ee6686fc
