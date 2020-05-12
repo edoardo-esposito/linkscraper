@@ -26,46 +26,46 @@ def run():
         #     'scraper': TechnologyReview_Computing_Scraper,
         #     'url': "https://www.technologyreview.com/c/computing/rss/"
         # },
-        # {
-        #     'sito': 'Water-Technology',
-        #     'scraper': WaterTechnology_Scraper,
-        #     'url': "https://www.water-technology.net/technology/"
-        # },
-        # {
-        #     'sito': 'SingularityHub',
-        #     'scraper': SingularityHub_Scraper,
-        #     'url': "https://singularityhub.com/feed/"
-        # },
+        {
+            'sito': 'Water-Technology',
+            'scraper': WaterTechnology_Scraper,
+            'url': "https://www.water-technology.net/technology/"
+        },
+        {
+            'sito': 'SingularityHub',
+            'scraper': SingularityHub_Scraper,
+            'url': "https://singularityhub.com/feed/"
+        },
         # {
         #     'sito': 'McKinsey Insights',
         #     'scraper': MckinseyInsights_Scraper,
         #     'url': "https://www.mckinsey.com/insights/rss.aspx"
         # },
-        # {
-        #     'sito': 'VentureBeat',
-        #     'scraper': VentureBeat_Scraper,
-        #     'url': "https://venturebeat.com/feed/"
-        # },
+        {
+            'sito': 'VentureBeat',
+            'scraper': VentureBeat_Scraper,
+            'url': "https://venturebeat.com/feed/"
+        },
         # {
         #     'sito': 'Wired.com',
         #     'scraper': WiredCom_Scraper,
         #     'url': "https://www.wired.com/feed/"
         # },
-        # {
-        #     'sito': 'Futurism',
-        #     'scraper': Futurism_Scraper,
-        #     'url': "https://feeder.co/discover/085f3bc023/futurism-com"
-        # },
+        {
+            'sito': 'Futurism',
+            'scraper': Futurism_Scraper,
+            'url': "https://feeder.co/discover/085f3bc023/futurism-com"
+        },
         {
             'sito': 'Springwise',
             'scraper': Springwise_Scraper,
             'url': "https://www.springwise.com/feed/"
         },
-        # {
-        #     'sito': 'The Verge',
-        #     'scraper': TheVerge_Scraper,
-        #     'url': "https://www.theverge.com/rss/index.xml"
-        # },
+        {
+            'sito': 'The Verge',
+            'scraper': TheVerge_Scraper,
+            'url': "https://www.theverge.com/rss/index.xml"
+        },
         # {
         #     'sito': 'Engadget',
         #     'scraper': Engadget_Scraper,
