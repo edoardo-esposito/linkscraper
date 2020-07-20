@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from scrapers.abstractscraper import AbstractScraper
 from utils import get_today_date, generate_link_id
+import time, random, string
+
+TEST = False
 
 
 class GenericWebsite_Scraper(AbstractScraper):
@@ -14,6 +17,16 @@ class GenericWebsite_Scraper(AbstractScraper):
         self.sitename = sitename
         self.params = params
 
+    def delay(self):
+        if TEST: return None
+
+        min = 5
+        max = 10
+        t = random.uniform(min, max)
+        print("Delay %d" % t)
+        time.sleep(t)
+        return None
+
     def parse_page(self, url):
         links = []
 
@@ -22,7 +35,7 @@ class GenericWebsite_Scraper(AbstractScraper):
         title_selector = self.params['title_selector']
         link_selector = self.params['link_selector']
 
-        if self.params['date_selector']:
+        if 'date_selector' in self.params:
             date_selector = self.params['date_selector']
         else:
             date_selector = None
@@ -30,38 +43,65 @@ class GenericWebsite_Scraper(AbstractScraper):
         try:
             headers = super().set_headers()
             results = requests.get(url.strip(), headers=headers)
+            # print (results.text)
 
             soup = BeautifulSoup(results.text, "html.parser")
             articles = soup.select(article_selector)
+            # print (article_selector)
+            # print (articles)
 
             if articles:
+                print ("Getting links")
+
+                if TEST:
+                    print ("Len: %d" % len(articles))
+
                 for article in articles:
-                    title = article.select(title_selector)[0].text
 
-                    link = article.select(link_selector)[0]['href']
-                    if not link.startswith(base_url):
-                        link = base_url + link
+                    try:
+                        title = article.select(title_selector)[0].text.strip()
+                        if TEST:
+                            print("---------------------------------")
+                            print(title)
 
-                    date = ''
-                    if date_selector:
-                        date = article.select(date_selector)[0].text
+                        link = article.select(link_selector)[0]['href']
+                        if not link.startswith("http"):
+                            link = base_url + link
 
-                    # print(title)
-                    # print(link)
-                    # print(date)
+                        if TEST:
+                            print("---------------------------------")
+                            print(link)
 
-                    links.append({
-                        'id': generate_link_id(title),
-                        'titolo': title,
-                        'text': '',
-                        'url': link,
-                        'data': date
-                    })
+                        date = ''
+                        try:
+                            if date_selector:
+                                date = article.select(date_selector)[0].text.strip()
+                        except Exception as e1:
+                            print("Exception in parse_page > for loop > get date")
 
-                    # break
+                        if TEST:
+                            print(date)
+
+                        links.append({
+                            'id': generate_link_id(title),
+                            'titolo': title,
+                            'text': '',
+                            'url': link,
+                            'data': date
+                        })
+
+                        if TEST:
+                            break
+                    except Exception as e:
+                        # TODO write exception to log for analysis
+                        print("Exception in parse_page > for loop")
+                        print(e)
+
+            self.delay()
 
         except Exception as e:
             # TODO write exception to log for analysis
+            print ("Exception in parse_page")
             print(e)
             links = []
 
@@ -79,6 +119,7 @@ class GenericWebsite_Scraper(AbstractScraper):
         else:
             links = self.parse_page(self.url)
 
+        self.delay()
         # links = self.parse_page(self.url)
         self.links = links
 
@@ -102,10 +143,13 @@ class GenericWebsite_Scraper(AbstractScraper):
             content = soup.select(content_selector)
 
             text = super().clean_text(content[0].text)
-        except:
+        except Exception as e:
             # TODO write exception to log for analysis
+            print ("Exception in get_item_text")
+            print (e)
             text = ''
 
+        self.delay()
         return (text)
 
     def get_item_date(self, url):
@@ -121,9 +165,15 @@ class GenericWebsite_Scraper(AbstractScraper):
             content = soup.select(content_date_selector)
 
             date = super().clean_text(content[0].text)
-        except:
+            if TEST:
+                print("---------------------------------")
+                print ("Date: %s" % date)
+        except Exception as e:
             # TODO write exception to log for analysis
+            print ("Exception in get_item_date")
+            print (e)
             date = ''
 
+        self.delay()
         return (date)
 

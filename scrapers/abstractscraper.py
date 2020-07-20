@@ -20,10 +20,20 @@ class AbstractScraper(object):
 
     @staticmethod
     def set_headers():
+        # headers = {
+        #     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OSX 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) "
+        #                   "Chrome/71.0.3578.98 Safari/537.36",
+        #     'Accept': 'application/xml;q=0.9, */*;q=0.8'
+        # }
+
         headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OSX 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/71.0.3578.98 Safari/537.36",
-            'Accept': 'application/xml;q=0.9, */*;q=0.8'
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "none",
+            "Upgrade-Insecure-Requests": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
         }
 
         return headers
@@ -45,7 +55,9 @@ class AbstractScraper(object):
                 if not l['data']:
                     data = self.get_item_date(l['url'])
                     l['data'] = data.encode().decode('utf-8')
-            except:
+            except Exception as e:
+                print ("Exception")
+                print (e)
                 l['text'] = ''
 
         return self.links
@@ -226,7 +238,7 @@ class AbstractScraper(object):
             rows.append(row)
 
         try:
-            with open(filename, 'w', newline='') as csvfile:
+            with open(filename, 'a', newline='') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=csv_columns, delimiter=";", quoting=csv.QUOTE_ALL)
 
                 for row in rows:
