@@ -4,8 +4,7 @@ from scrapers.abstractscraper import AbstractScraper
 from utils import get_today_date, generate_link_id
 import time, random, string
 
-TEST = False
-
+TEST = True
 
 class GenericWebsite_Scraper(AbstractScraper):
 
@@ -43,12 +42,14 @@ class GenericWebsite_Scraper(AbstractScraper):
         try:
             headers = super().set_headers()
             results = requests.get(url.strip(), headers=headers)
-            # print (results.text)
+            if TEST:
+                print (results.text)
 
             soup = BeautifulSoup(results.text, "html.parser")
             articles = soup.select(article_selector)
-            # print (article_selector)
-            # print (articles)
+            if TEST:
+                print (article_selector)
+                print (articles)
 
             if articles:
                 print ("Getting links")
