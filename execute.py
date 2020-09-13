@@ -28,16 +28,188 @@ PRINT_ITEMS = False
 # Futurism, Mckinsey Insight, VentureBeat, Wired, Endgadget, WaterTechnology,
 # AdWeek, The RobotReport, Israel21c, GreenBiz
 
-def getReutersLinks():
+def getReutersLinks(min, max):
     links = []
-    for i in range(0, 1):
+    for i in range(min, max):
         links.append("https://www.reuters.com/news/archive/technologynews?view=page&page=%d&pageSize=10" % i)
 
     return links
 
+def getSingularityHubLinks(min, max):
+    links = []
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/artificial-intelligence/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/blockchain/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/robotics/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/neuroscience/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/computing/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/biotechnology/page/%d/" % i)
+
+    return links
+
+def getIPILinks(min, max):
+    links = []
+    for i in range(min, max):
+        links.append("https://www.ipi-singapore.org/news?page=%d" % i)
+    for i in range(min, max):
+        links.append("https://www.ipi-singapore.org/innovation-insights?page=%d" % i)
+
+    return links
+
+def getIsrael21cLinks(min, max):
+    links = []
+    for i in range(min, max):
+        links.append("https://www.israel21c.org/topic/technology/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://www.israel21c.org/topic/health/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://www.israel21c.org/topic/environment/page/%d/" % i)
+
+    return links
+
+def getCleanTechnicaLinks(min, max):
+    links = []
+    for i in range(min, max):
+        links.append("https://cleantechnica.com/category/clean-energy/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://cleantechnica.com/category/cleantechnica-2/cleantechnica-exclusive/cleantechnica-reviews/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://cleantechnica.com/category/energy-efficiency/page/%d/" % i)
+
+    return links
+
+def getTheSpoonLinks(min, max):
+    links = []
+
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/topics/connected-kitchen/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/topics/robotics-ai/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/restaurant-tech/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/future-of-grocery/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/future-food/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/future-of-drink/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/food-waste/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/topics/foodtech/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://thespoon.tech/category/topics/food-tech-biz//page/%d/" % i)
+
+    return links
+
+def getTheVergeLinks(min, max):
+    links = []
+
+    for i in range(min, max):
+        links.append("https://www.theverge.com/tech/archives/%d " % i)
+    for i in range(min, max):
+        links.append("https://www.theverge.com/energy/archives/%d" % i)
+    for i in range(min, max):
+        links.append("https://www.theverge.com/health/archives/%d" % i)
+
+    return links
+
+def getGreenBizLinks(min, max):
+    links = []
+
+    for i in range(min, max):
+        links.append("https://www.greenbiz.com/collections/sustainability/page=%d " % i)
+    for i in range(min, max):
+        links.append("https://www.greenbiz.com/collections/food-systems/page=%d " % i)
+    for i in range(min, max):
+        links.append("https://www.greenbiz.com/collections/energy/page=%d " % i)
+    for i in range(min, max):
+        links.append("https://www.greenbiz.com/collections/transportation/page=%d " % i)
+    for i in range(min, max):
+        links.append("https://www.greenbiz.com/collections/circular-economy/page=%d " % i)
+    for i in range(min, max):
+        links.append("https://www.greenbiz.com/collections/cities/page=%d " % i)
+
+    return links
+
+def getWaterTechnologyLinks(min, max):
+    links = []
+
+    for i in range(min, max):
+        links.append("https://www.water-technology.net/news/technology/page/%d/" % i)
+
+    return links
+
+def getVentureBeatLinks(min, max):
+    links = []
+
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/ai/page/%d/" % i)
+
+    for i in range(min, max):
+        links.append("https://venturebeat.com/category/arvr/page/%d/" % i)
+
+    for i in range(min, max):
+        links.append("https://venturebeat.com/category/cloud/page/%d/" % i)
+
+    for i in range(min, max):
+        links.append("https://venturebeat.com/category/big-data/page/%d/" % i)
+
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/machine-learning/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/computer-vision/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/natural-language-processing/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/robotic-process-automation/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/entrepreneur/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/mobile/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/security/page/%d/" % i)
+    #
+    # for i in range(min, max):
+    #     links.append("https://venturebeat.com/category/transportation/page/%d/" % i)
+
+    return links
+
+def getFoxNewsLinks():
+    links = []
+    links.append("https://www.foxnews.com/category/tech/topics/innovation")
+    links.append("https://www.foxnews.com/category/tech/technologies/drones")
+    links.append("https://www.foxnews.com/category/tech/topics/military-tech")
+
+    return links
+
+def getPysOrgLinks(min, max):
+    links = []
+
+    for i in range(min, max):
+        links.append("https://phys.org/weekly-news/page%d.html" % i)
+
+    # 'https://phys.org/space-news/',
+    # "https://phys.org/nanotech-news/",
+    # "https://phys.org/physics-news/",
+    # 'https://phys.org/technology-news/'
+
+    return links
 
 def run():
-
+    min = 1#40
+    max = 2#60
 
     sources = [
         # {
@@ -57,24 +229,67 @@ def run():
         #     }
         # },
         {
-            'sito': "arXiv",
+            'sito': "TechnologyOrg",
             'scraper': GenericWebsite_Scraper,
             'url': [
-                "https://arxiv.org/list/cs.CV/pastweek?show=423"
+                "https://www.technology.org/category/information-processing/ai-neural-networks/page/2/"
             ],
             'params': {
-                "base_url": "https://arxiv.org/",
-                "article_selector": "div#content > div#dlpage > dl",
-                "title_selector": "dd > div.meta > div.list-title",
-                "link_selector": "dt > span.list-identifier > a",
-                "content_date_selector": "div#content > div#abs-outer > div.leftcolumn > div#content-inner > div#abs > div.dateline",
-                "content_selector": "div#content > div#abs-outer > div.leftcolumn > div#content-inner > div#abs"
+                "base_url": "https://www.technology.org",
+                "article_selector": "div#technology-org-primary > ul.technology-org-list > li",
+                "title_selector": "a",
+                "link_selector": "a",
+                "date_selector": "span.technology-org-time > span",
+                "content_date_selector": "",
+                "content_selector": "div#main div#technology-org-primary > div.entry-content"
             }
         },
         # {
+        #     'sito': "Fox News",
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getFoxNewsLinks(),
+        #     'params': {
+        #         "base_url": "https://foxnews.com",
+        #         "article_selector": "section.collection > div.content > article",
+        #         "title_selector": "header > h4",
+        #         "link_selector": "header > h4 > a",
+        #         "date_selector": "header > div.meta span",
+        #         "content_date_selector": "",
+        #         "content_selector": "article.article-wrap div.article-body"
+        #     }
+        # },
+        # {
+        #     'sito': "VentureBeat",
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getVentureBeatLinks(min, max),
+        #     'params': {
+        #         "base_url": "https://venturebeat.com",
+        #         "article_selector": "div#river > article",
+        #         "title_selector": "header > h2",
+        #         "link_selector": "header > h2 > a",
+        #         "date_selector": "header > div.ArticleListing__byline > time",
+        #         "content_date_selector": "",
+        #         "content_selector": "div#content > article > div.article-content"
+        #     }
+        # },
+        # {
+        #     'sito': "WaterTechnology",
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getWaterTechnologyLinks(min, max),
+        #     'params': {
+        #         "base_url": "https://www.water-technology.net/",
+        #         "article_selector": "section > div.posts article",
+        #         "title_selector": "h2",
+        #         "link_selector": "h2 > a",
+        #         "date_selector": "div.imgspace",
+        #         "content_date_selector": "",
+        #         "content_selector": "div#infinite-article div.post-content"
+        #     }
+        # },
+        # {
         #     'sito': "Reuters",
         #     'scraper': GenericWebsite_Scraper,
-        #     'url': getReutersLinks(),
+        #     'url': getReutersLinks(min, max),
         #     'params': {
         #         "base_url": "https://www.reuters.com/",
         #         "article_selector": "div#content section.module-content article.story",
@@ -88,10 +303,7 @@ def run():
         # {
         #     'sito': "Israel21c",
         #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         "https://www.israel21c.org/topic/technology/",
-        #         "https://www.israel21c.org/topic/health/",
-        #     ],
+        #     'url': getIsrael21cLinks(min, max),
         #     'params': {
         #         "base_url": "https://www.israel21c.org/",
         #         "article_selector": "div#topics > section > article.item",
@@ -101,6 +313,73 @@ def run():
         #         "content_selector": "article div.article-body"
         #     }
         # },
+        # {
+        #     'sito': 'TheVerge',
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getTheVergeLinks(min, max),
+        #     'params': {
+        #         "base_url": "https://www.theverge.com/",
+        #         "article_selector": "#content div.l-col__main > div.c-compact-river > div.c-compact-river__entry",
+        #         "title_selector": "div.c-entry-box--compact > div.c-entry-box--compact__body > h2.c-entry-box--compact__title",
+        #         "link_selector": "div.c-entry-box--compact > div.c-entry-box--compact__body > h2.c-entry-box--compact__title > a",
+        #         "content_date_selector": "time",
+        #         "content_selector": "article.l-main-content > div.l-article-body-segment div.c-entry-content"
+        #     }
+        # },
+        # {
+        #     'sito': 'SingularityHub',
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getSingularityHubLinks(min, max),
+        #     'params': {
+        #         "base_url": "https://singularityhub.com/",
+        #         "article_selector": "#td-outer-wrap .td-ss-main-content .item-details",
+        #         "title_selector": "h3.entry-title",
+        #         "link_selector": "h3 > a",
+        #         "date_selector": "div.td-module-meta-info > span.td-post-date > time",
+        #         "content_selector": "div.td-container div.td-post-content"
+        #     }
+        # },
+        # {
+        #     'sito': 'CleanTechnica',
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getCleanTechnicaLinks(min, max),
+        #     'params': {
+        #         "base_url": "https://cleantechnica.com/",
+        #         "article_selector": "section#omc-main > article",
+        #         "title_selector": "div.omc-blog-two-text > h2",
+        #         "link_selector": "h2 > a",
+        #         "date_selector": "article > div.omc-blog-two-text > p.omc-blog-two-date",
+        #         "content_selector": "#omc-full-article"
+        #     }
+        # },
+        # {
+        #     'sito': 'IPI Singapore',
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getIPILinks(min, max),
+        #     'params': {
+        #         "base_url": "https://www.ipi-singapore.org/",
+        #         # "article_selector": "section > section > div > ul > li",
+        #         "article_selector": "div.view-content > div.news-list-hld > div > ul > li",
+        #         "title_selector": "h3",
+        #         "link_selector": "span > a",
+        #         "date_selector": "h4",
+        #         "content_date_selector": "section > div > div.contant-hld > h4",
+        #         "content_selector": "div.contant-hld > div"
+        #     }
+        # },
+        # {
+        #     'sito': 'TheSpoon',
+        #     'scraper': GenericWebsite_Scraper,
+        #     'url': getTheSpoonLinks(min, max),
+        #     'params': {
+        #         'base_url': "https://thespoon.tech/",
+        #         'article_selector': 'div#article-wrap > article',
+        #         'title_selector': 'header.entry-header > h2',
+        #         'link_selector': 'header.entry-header > h2 > a',
+        #         'date_selector': 'header.entry-header > p.entry-meta > time',
+        #         'content_selector': 'div.entry-content > p'
+        #     }
+        # }
         # {
         #     'sito': "SpringWise",
         #     'scraper': GenericWebsite_Scraper,
@@ -129,109 +408,9 @@ def run():
         #     }
         # },
         # {
-        #     'sito': 'TheVerge',
-        #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         "https://www.theverge.com/tech",
-        #     ],
-        #     'params': {
-        #         "base_url": "https://www.theverge.com/",
-        #         "article_selector": "#content div.l-col__main > div.c-compact-river > div.c-compact-river__entry",
-        #         "title_selector": "div.c-entry-box--compact > div.c-entry-box--compact__body > h2.c-entry-box--compact__title",
-        #         "link_selector": "div.c-entry-box--compact > div.c-entry-box--compact__body > h2.c-entry-box--compact__title > a",
-        #         "content_date_selector": "time",
-        #         "content_selector": "article.l-main-content > div.l-article-body-segment div.c-entry-content"
-        #     }
-        # },
-        # {
-        #     'sito': 'SingularityHub',
-        #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         "https://singularityhub.com/tag/artificial-intelligence/",
-        #         "https://singularityhub.com/tag/blockchain/",
-        #         "https://singularityhub.com/tag/robotics/",
-        #         "https://singularityhub.com/tag/neuroscience/",
-        #         "https://singularityhub.com/tag/computing/",
-        #         "https://singularityhub.com/tag/biotechnology/"
-        #         # "https://singularityhub.com/tag/biotechnology/page/3/"
-        #      ],
-        #     'params': {
-        #         "base_url": "https://singularityhub.com/",
-        #         "article_selector": "#td-outer-wrap .td-ss-main-content .item-details",
-        #         "title_selector": "h3.entry-title",
-        #         "link_selector": "h3 > a",
-        #         "date_selector": "div.td-module-meta-info > span.td-post-date > time",
-        #         "content_selector": "div.td-container div.td-post-content"
-        #     }
-        # },
-        # {
-        #     'sito': 'CleanTechnica',
-        #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         'https://cleantechnica.com/category/clean-energy/',
-        #         'https://cleantechnica.com/category/cleantechnica-2/cleantechnica-exclusive/cleantechnica-reviews/',
-        #         'https://cleantechnica.com/category/energy-efficiency/'
-        #      ],
-        #     'params': {
-        #         "base_url": "https://cleantechnica.com/",
-        #         "article_selector": "section#omc-main > article",
-        #         "title_selector": "div.omc-blog-two-text > h2",
-        #         "link_selector": "h2 > a",
-        #         "date_selector": "article > div.omc-blog-two-text > p.omc-blog-two-date",
-        #         "content_selector": "#omc-full-article"
-        #     }
-        # },
-        # {
-        #     'sito': 'IPI Singapore',
-        #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         # "https://www.ipi-singapore.org/success-stories",
-        #         "https://www.ipi-singapore.org/innovation-insights",
-        #         "https://www.ipi-singapore.org/news"
-        #     ],
-        #     'params': {
-        #         "base_url": "https://www.ipi-singapore.org/",
-        #         # "article_selector": "section > section > div > ul > li",
-        #         "article_selector": "div.view-content > div.news-list-hld > div > ul > li",
-        #         "title_selector": "h3",
-        #         "link_selector": "span > a",
-        #         "date_selector": "h4",
-        #         "content_date_selector": "section > div > div.contant-hld > h4",
-        #         "content_selector": "div.contant-hld > div"
-        #     }
-        # },
-        # {
-        #     'sito': 'TheSpoon',
-        #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         'https://thespoon.tech/category/topics/connected-kitchen/',
-        #         # 'https://thespoon.tech/category/topics/food-tech-biz/',
-        #         # 'https://thespoon.tech/category/topics/foodtech/',
-        #         # 'https://thespoon.tech/category/food-waste/',
-        #         # 'https://thespoon.tech/category/future-of-drink/',
-        #         # 'https://thespoon.tech/category/future-food/',
-        #         # 'https://thespoon.tech/category/future-of-grocery/',
-        #         # 'https://thespoon.tech/category/restaurant-tech/',
-        #         # 'https://thespoon.tech/category/topics/robotics-ai/'
-        #     ],
-        #     'params': {
-        #         'base_url': "https://thespoon.tech/",
-        #         'article_selector': 'div#article-wrap > article',
-        #         'title_selector': 'header.entry-header > h2',
-        #         'link_selector': 'header.entry-header > h2 > a',
-        #         'date_selector': 'header.entry-header > p.entry-meta > time',
-        #         'content_selector': 'div.entry-content > p'
-        #     }
-        # }
-        # {
         #     'sito': 'Phys.Org',
         #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         'https://phys.org/space-news/',
-        #         "https://phys.org/nanotech-news/",
-        #         "https://phys.org/physics-news/",
-        #         'https://phys.org/technology-news/'
-        #     ],
+        #     'url': getPysOrgLinks(min, max),
         #     'params': {
         #         "base_url": "https://phys.org/",
         #         "article_selector": ".sorted-news-list > article",
@@ -244,14 +423,7 @@ def run():
         # {
         #     'sito': 'GreenBiz',
         #     'scraper': GenericWebsite_Scraper,
-        #     'url': [
-        #         "https://www.greenbiz.com/collections/sustainability",
-        #         "https://www.greenbiz.com/collections/food-systems",
-        #         "https://www.greenbiz.com/collections/energy",
-        #         "https://www.greenbiz.com/collections/transportation",
-        #         "https://www.greenbiz.com/collections/circular-economy",
-        #         "https://www.greenbiz.com/collections/cities"
-        #     ],
+        #     'url': getGreenBizLinks(min, max),
         #     'params': {
         #         "base_url": "https://www.greenbiz.com/",
         #         "article_selector": "article > div.article-teaser-vertical__content",
