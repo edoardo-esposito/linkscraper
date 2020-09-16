@@ -161,7 +161,8 @@ def parse_page(url, params):
 
 def get_items(url):
 
-    logger.info(str("Get links from [%s]" % url))
+    if DEBUG:
+        logger.debug(str("Get links from [%s]" % url))
 
     if isinstance(url, list):
         links = []
