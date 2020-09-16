@@ -8,15 +8,23 @@ from urllib.error import URLError
 import os
 import csv
 import dateparser
+from datetime import date
+from logger import Logger
 
 DEBUG = False
-TEST = DEBUG
-PRINT_ITEMS = False
+TEST = False
 TO_CSV = True
+
 min = 1
 max = 2
 
 ######## UTILITY FUNCTIONS
+def get_today_date():
+    today = date.today()
+    today.strftime("%Y-%m-%d")
+
+    return str(today)
+
 def generate_link_id(titolo):
     link_id = hashlib.md5(titolo.encode('utf-8')).hexdigest()
     return link_id
@@ -40,7 +48,8 @@ def delay():
     min = 5
     max = 10
     t = random.uniform(min, max)
-    print("Delay %d" % t)
+
+    # print("Delay %d" % t)
     time.sleep(t)
     return None
 
@@ -54,7 +63,6 @@ def clean_text(text):
 
     text = text.replace(r'\n', '')
     text = text.replace(r'\r', '')
-    # text = text.replace("\n", " ")
     text = ' '.join(text.split())
     text = text.strip()
 
@@ -62,18 +70,21 @@ def clean_text(text):
 
 def parse_date(date):
     if DEBUG:
-        print("Parse date")
+        logger.debug(str("Parsing input date %s" % date))
 
     d = dateparser.parse(date)
 
     if d:
         return d
 
+    logger.err(str("Could not parse date %s" % date))
     return date
 
 ######## SCRAPER
 def parse_page(url, params):
     links = []
+
+    logger.info("Parsing url: " + url)
 
     base_url = params['base_url']
     article_selector = params['article_selector']
@@ -92,37 +103,34 @@ def parse_page(url, params):
         soup = BeautifulSoup(results.text, "html.parser")
         articles = soup.select(article_selector)
 
-        # if TEST:
-        #     print (article_selector)
-        #     print (articles)
-
         if articles:
-            if TEST:
-                print ("Number of links in page: %d" % len(articles))
+            if DEBUG:
+                logger.debug(str("Number of links in url: %d" % len(articles)))
 
             for article in articles:
 
                 try:
                     title = article.select(title_selector)[0].text.strip()
-                    if TEST:
-                        print("Title: \"%s\"" % title)
+
+                    if DEBUG:
+                        logger.debug("Title: " + title)
 
                     link = article.select(link_selector)[0]['href']
                     if not link.startswith("http"):
                         link = base_url + link
 
-                    if TEST:
-                        print("Link: \"%s\"" % link)
+                    if DEBUG:
+                        logger.debug("Link: " + link)
 
                     date = ''
                     try:
                         if date_selector:
                             date = parse_date(article.select(date_selector)[0].text.strip())
                     except Exception as e1:
-                        print("Exception in parse_page > for loop > get date")
+                        logger.err("Exception in parse_page > for loop > get date")
 
-                    if TEST:
-                        print("Date: \"%s\"" % date)
+                    if DEBUG:
+                        logger.debug("Date: " + str(date))
 
                     links.append({
                         'id': generate_link_id(title),
@@ -136,24 +144,24 @@ def parse_page(url, params):
                         break
 
                 except Exception as e:
-                    # TODO write exception to log for analysis
-                    print("Exception in parse_page > for loop")
-                    print(e)
+                    logger.err("Exception in parse_page > for loop")
+                    # print("Exception in parse_page > for loop")
+                    # print(e)
 
         delay()
 
     except Exception as e:
         # TODO write exception to log for analysis
-        print ("Exception in parse_page")
-        print(e)
+        logger.err("Exception in parse_page")
+        # print ("Exception in parse_page")
+        # print(e)
         links = []
 
     return links
 
 def get_items(url):
 
-    if DEBUG:
-        print("Get links from [%s]" % url)
+    logger.info(str("Get links from [%s]" % url))
 
     if isinstance(url, list):
         links = []
@@ -162,14 +170,15 @@ def get_items(url):
             l = parse_page(u, params)
             links = links + l[:len(l)]
     else:
-        links = parse_page(url)
+        links = parse_page(url, params)
 
     # delay()
+
     return links
 
 def get_item_text(url):
     if DEBUG:
-        print("Get text from article [%s]" % url.encode())
+        logger.debug(str("Get text from article [%s]" % url.encode()))
 
     content_selector = params['content_selector']
 
@@ -184,8 +193,9 @@ def get_item_text(url):
 
     except Exception as e:
         # TODO write exception to log for analysis
-        print ("Exception in get_item_text")
-        print (e)
+        logger.err("Exception in get_item_text")
+        # print ("Exception in get_item_text")
+        # print (e)
         text = ''
 
     delay()
@@ -193,7 +203,7 @@ def get_item_text(url):
 
 def get_item_date(self, url):
     if DEBUG:
-        print("Get date from article [%s]" % url.encode())
+        logger.debug(str("Get date from article [%s]" % url.encode()))
 
     content_date_selector = self.params['content_date_selector']
 
@@ -206,7 +216,7 @@ def get_item_date(self, url):
 
         date = clean_text(content[0].text)
 
-        if TEST:
+        if DEBUG:
             print("Date: \"%s\"" % date)
 
     except Exception as e:
@@ -219,7 +229,6 @@ def get_item_date(self, url):
     return (date)
 
 def get_data_from_links(links):
-    print("%d links found" % len(links))
 
     for l in links:
         try:
@@ -230,8 +239,9 @@ def get_data_from_links(links):
                 data = get_item_date(l['url'])
                 l['data'] = data.encode().decode('utf-8')
         except Exception as e:
-            print ("Exception")
-            print (e)
+            logger.err(str("Exception in get_data_from_links %s" % l['url']))
+            # print ("Exception")
+            # print (e)
             l['text'] = ''
 
     return links
@@ -244,24 +254,31 @@ def find_items_in_csv(filename, word):
 
             for row in csv_reader:
                 if row[0] == word:
+                    logger.warn(str("Row \"%s\" already present" % row[1]))
                     return True
 
     except IndexError:
+        logger.err(str("Index Error in find_items_in_csv on %s" % filename))
         pass
     except IOError:
+        logger.err(str("IOError in find_items_in_csv on %s" % filename))
         pass
-        # print("File non presente")
 
     return False
 
 def items_to_csv(links):
     if DEBUG:
-        print("Print to CSV")
+        logger.debug("Printing to CSV")
 
     dirname = "output"
-    date = datetime.date.today().strftime("%Y-%m-%d_%H:%M:%S")
+    # d = datetime.date.today().strftime("%Y-%m-%d_%H%M")
+
+    d = get_today_date()
     # TODO add date to file
     filename = dirname + "\\" + d + "_" + sitename.replace(" ", "") + ".csv"
+
+    if DEBUG:
+        logger.debug("Filename: " + filename)
 
     if not os.path.exists(dirname):
         os.makedirs(dirname)
@@ -273,7 +290,7 @@ def items_to_csv(links):
 
         if find_items_in_csv(filename, data['id']):
             if DEBUG:
-                print("Elemento con %s già esistente" % data['id'])
+                logger.err(str("Elemento con %s già esistente" % data['id']))
             continue
 
         txt = ''
@@ -294,10 +311,11 @@ def items_to_csv(links):
                 try:
                     writer.writerow(row)
                 except:
+                    logger.err(str("Exception in items_to_csv on %s" % filename))
                     pass
 
     except IOError:
-        print("I/O error")
+        logger.err(str("IOError in items_to_csv on %s" % filename))
 
 ############# SITE CONFIG
 def getSingularityHubLinks(min, max):
@@ -306,14 +324,17 @@ def getSingularityHubLinks(min, max):
         links.append("https://singularityhub.com/tag/artificial-intelligence/page/%d/" % i)
     for i in range(min, max):
         links.append("https://singularityhub.com/tag/blockchain/page/%d/" % i)
-    for i in range(min, max):
-        links.append("https://singularityhub.com/tag/robotics/page/%d/" % i)
-    for i in range(min, max):
-        links.append("https://singularityhub.com/tag/neuroscience/page/%d/" % i)
-    for i in range(min, max):
-        links.append("https://singularityhub.com/tag/computing/page/%d/" % i)
-    for i in range(min, max):
-        links.append("https://singularityhub.com/tag/biotechnology/page/%d/" % i)
+    # for i in range(min, max):
+    #     links.append("https://singularityhub.com/tag/robotics/page/%d/" % i)
+    # for i in range(min, max):
+    #     links.append("https://singularityhub.com/tag/neuroscience/page/%d/" % i)
+    # for i in range(min, max):
+    #     links.append("https://singularityhub.com/tag/computing/page/%d/" % i)
+    # for i in range(min, max):
+    #     links.append("https://singularityhub.com/tag/biotechnology/page/%d/" % i)
+
+    if DEBUG:
+        return links[0]
 
     return links
 
@@ -331,6 +352,8 @@ config = {
 }
 
 try:
+    logger = Logger()
+
     sitename = config['sito']
     url = config['url']
     params = config['params']
@@ -339,12 +362,9 @@ try:
     items = get_data_from_links(links)
 
     if TO_CSV:
-        print("Dumping articles to CSV")
+        logger.info("Dumping articles to CSV")
         items_to_csv(items)
 
-    if PRINT_ITEMS:
-        print(items)
-
 except URLError as e:
-    print("Error in [%s]" % s['sito'])
+    logger.err(str("Error in [%s]" % s['sito']))
     pass
