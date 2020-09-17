@@ -325,14 +325,32 @@ def getSingularityHubLinks(min, max):
         links.append("https://singularityhub.com/tag/artificial-intelligence/page/%d/" % i)
     for i in range(min, max):
         links.append("https://singularityhub.com/tag/blockchain/page/%d/" % i)
-    # for i in range(min, max):
-    #     links.append("https://singularityhub.com/tag/robotics/page/%d/" % i)
-    # for i in range(min, max):
-    #     links.append("https://singularityhub.com/tag/neuroscience/page/%d/" % i)
-    # for i in range(min, max):
-    #     links.append("https://singularityhub.com/tag/computing/page/%d/" % i)
-    # for i in range(min, max):
-    #     links.append("https://singularityhub.com/tag/biotechnology/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/robotics/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/neuroscience/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/computing/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/biotechnology/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/virtual-reality/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/3d-printing/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/augmented-reality/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/automation/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/brain-computer-interface/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/energy/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/environment/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/innovation/page/%d/" % i)
+    for i in range(min, max):
+        links.append("https://singularityhub.com/tag/internet-of-things/page/%d/" % i)
 
     if DEBUG:
         return links[0]
