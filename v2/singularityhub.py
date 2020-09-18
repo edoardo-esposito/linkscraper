@@ -1,18 +1,8 @@
 # coding=utf8
+from config import TEST, TO_CSV, min, max
+from scraper import get_items,  get_data_from_links, items_to_csv, scrape_site
 
 
-from logger import Logger
-from urllib.error import URLError
-
-from config import DEBUG, TEST, TO_CSV, min, max
-from utils import get_today_date, set_headers, parse_date, \
-    generate_link_id, delay, clean_text
-
-from scraper import get_items,  get_data_from_links, items_to_csv
-
-######## SCRAPER
-
-############# SITE CONFIG
 def getSingularityHubLinks(min, max):
     links = []
     for i in range(min, max):
@@ -65,20 +55,4 @@ config = {
     }
 }
 
-try:
-    logger = Logger()
-
-    sitename = config['sito']
-    url = config['url']
-    params = config['params']
-
-    links = get_items(url, params)
-    items = get_data_from_links(links, params)
-
-    if TO_CSV:
-        logger.info("Dumping articles to CSV")
-        items_to_csv(items, sitename)
-
-except URLError as e:
-    logger.err(str("Error in [%s]" % s['sito']))
-    pass
+scrape_site(config)

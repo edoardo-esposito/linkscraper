@@ -248,3 +248,22 @@ def items_to_csv(links, sitename):
 
     except IOError:
         logger.err(str("IOError in items_to_csv on %s" % filename))
+
+def scrape_site(config):
+    try:
+        # logger = Logger()
+
+        sitename = config['sito']
+        url = config['url']
+        params = config['params']
+
+        links = get_items(url, params)
+        items = get_data_from_links(links, params)
+
+        if TO_CSV:
+            logger.info("Dumping articles to CSV")
+            items_to_csv(items, sitename)
+
+    except URLError as e:
+        logger.err(str("Error in [%s]" % s['sito']))
+        pass
